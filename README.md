@@ -1,109 +1,107 @@
-Flash Sale System
+# 🚀 Flash Sale System
 
-A flash sale application that safely handles high-concurrency purchases using inventory holds and race-safe locking.
+A high-performance flash sale application designed to safely handle **high-concurrency purchases** using **inventory holds** and **race-safe locking**.
 
-Features
-Live Storefront
+---
 
-Shows products with active sale windows
+## ⚙️ Setup Steps
 
-Displays product name, price, description
-
-Product-wise sale countdown (HH:MM:SS)
-
-Live stock indicator (remaining / total)
-
-Stock auto-refresh every 5 seconds
-
-Buy flow creates a 2-minute inventory hold
-
-Checkout
-
-Shows order details and hold timer
-
-Confirm button to place order
-
-Clear UI state when hold expires
-
-Admin Console (/admin)
-
-Auto-refresh every 5 seconds
-
-Product table with:
-
-Total stock
-
-Live stock
-
-Pending holds count
-
-Confirmed count
-
-Expired count
-
-Metrics:
-
-Total holds created
-
-Confirmed orders
-
-Expired orders
-
-Chart showing Sold vs Expired orders (since server start)
-
-Tech Stack
-
-Backend: Node.js, Express, Prisma v6, PostgreSQL, Redis
-
-Frontend: React, React Query, Tailwind CSS, Chart.js
-
-Setup
-Backend
+### 🔧 Backend
+```bash
 cd server
 npm install
 npx prisma migrate reset
 npx prisma db seed
 npm run dev
+```
 
-Frontend
+### 🎨 Frontend
+```bash
 cd client
 npm install
 npm run dev
+```
 
-Database Schema (Summary)
+## 🛠 Tech Stack
 
-Product: name, price, totalStock, sale window
+### Backend
+- Node.js
+- Express
+- Prisma v6
+- PostgreSQL
+- Redis (locking + concurrency control)
 
-Order: productId, quantity, status, hold expiry
+### Frontend
+- React
+- React Query
+- Tailwind CSS
+- Chart.js
+```
+## 🗄 Database Schema
 
-InventoryEvent: audit log for stock changes
+### Product
+- `id`
+- `name`
+- `description`
+- `price`
+- `totalStock`
+- `saleStartsAt`
+- `saleEndsAt`
+- `createdAt`
 
-Locking Strategy
+### Order
+- `id`
+- `productId`
+- `customerEmail`
+- `quantity`
+- `status` (`PENDING` | `CONFIRMED` | `EXPIRED`)
+- `holdExpiresAt`
+- `createdAt`
 
-Inventory updates are protected using Redis locks:
+### InventoryEvent
+- `id`
+- `productId`
+- `type` (`HOLD_CREATED` | `CONFIRMED` | `EXPIRED`)
+- `delta`
+- `metadata`
+- `createdAt`
 
-One lock per product
 
-Stock is validated and reserved inside the lock
+## 🔒 Locking Strategy
 
-Prevents overselling under concurrent requests
+To prevent overselling under high concurrency, the system uses **Redis-based locking**.
 
-Stock is derived, not stored:
+### How it works:
+1. One Redis lock per product
+2. Lock is acquired before modifying inventory
+3. Stock validation and reservation happen inside the lock
+4. Lock is released immediately after operation
 
-liveStock = totalStock − (confirmed + active pending)
+### Why this works:
+- Prevents race conditions
+- Ensures no two requests can reserve the same stock
+- Guarantees correctness even under heavy traffic
 
-Assumptions
+### Inventory Hold Flow:
+1. User clicks **Buy**
+2. Lock acquired for product
+3. Stock checked and reserved
+4. 2-minute hold created
+5. Lock released
+6. Order must be confirmed before hold expires
 
-No authentication required (admin is read-only)
 
-Email is used only as a lightweight order identifier
+## 📌 Assumptions
 
-Chart is shown since server start (allowed by spec)
+- No authentication required (admin is read-only)
+- Email is used only as a lightweight order identifier
+- Admin metrics and charts are shown since server start
+- Polling interval of 5 seconds is acceptable
 
-Trade-offs
 
-Polling used instead of WebSockets for simplicity
+## ⚖️ Trade-offs
 
-Derived stock increases queries but guarantees correctness
-
-Admin console focuses on monitoring, not management
+- **Polling** used instead of WebSockets for simplicity
+- **Derived stock** increases query cost but guarantees correctness
+- **Admin console** focuses on monitoring, not management
+- **Redis required**, adding infrastructure dependency
