@@ -3,6 +3,12 @@
 A high-performance flash sale application designed to safely handle **high-concurrency purchases** using **inventory holds** and **race-safe locking**.
 
 ---
+### 🎨 File Locations
+```bash
+.env.example. -> server/.env.example
+Seed Script -> server/prisma/seed.js
+```
+
 
 ## ⚙️ Setup Steps
 
