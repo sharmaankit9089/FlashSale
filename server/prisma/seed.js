@@ -14,16 +14,8 @@ async function main() {
         description: "Rechargeable beard trimmer with precision settings",
         price: 1999,
         totalStock: 80,
-        saleStartsAt: new Date(now.getTime() - 80 * 60 * 60 * 1000),
-        saleEndsAt: new Date(now.getTime() + 80 * 60 * 60 * 1000)
-      },
-      {
-        name: "Hair Styling Wax",
-        description: "Strong hold hair wax with matte finish",
-        price: 499,
-        totalStock: 150,
-        saleStartsAt: new Date(now.getTime() - 74 * 60 * 60 * 1000),
-        saleEndsAt: new Date(now.getTime() + 74 * 60 * 60 * 1000)
+        saleStartsAt: new Date(now.getTime() - 3 * 60 * 1000),
+        saleEndsAt: new Date(now.getTime() + 3 * 60 * 1000)
       },
       {
         name: "Electric Shaver X",
@@ -32,6 +24,14 @@ async function main() {
         totalStock: 60,
         saleStartsAt: new Date(now.getTime() - 66 * 60 * 60 * 1000),
         saleEndsAt: new Date(now.getTime() + 66 * 60 * 60 * 1000)
+      },
+      {
+        name: "Hair Styling Wax",
+        description: "Strong hold hair wax with matte finish",
+        price: 499,
+        totalStock: 150,
+        saleStartsAt: new Date(now.getTime() -  10 * 60 * 1000),
+        saleEndsAt: new Date(now.getTime() +  10 * 60 * 1000)
       },
       {
         name: "Beard Growth Oil",
@@ -46,8 +46,8 @@ async function main() {
         description: "Cooling aftershave lotion with aloe vera",
         price: 599,
         totalStock: 100,
-        saleStartsAt: new Date(now.getTime() - 60 * 60 * 60 * 1000),
-        saleEndsAt: new Date(now.getTime() + 60 * 60 * 60 * 1000)
+        saleStartsAt: new Date(now.getTime() - 5 * 60 * 1000),
+        saleEndsAt: new Date(now.getTime() +  5 * 60 * 1000)
       },
       {
         name: "Men’s Face Wash",
@@ -62,8 +62,8 @@ async function main() {
         description: "Compact hair dryer with heat protection",
         price: 1799,
         totalStock: 50,
-        saleStartsAt: new Date(now.getTime() - 65 * 60 * 60 * 1000),
-        saleEndsAt: new Date(now.getTime() + 67 * 60 * 60 * 1000)
+        saleStartsAt: new Date(now.getTime() - 6 * 60 * 60 * 1000),
+        saleEndsAt: new Date(now.getTime() + 6 * 60 * 60 * 1000)
       },
       {
         name: "Beard Comb Kit",
@@ -78,8 +78,8 @@ async function main() {
         description: "Complete grooming kit with trimmer and accessories",
         price: 3499,
         totalStock: 40,
-        saleStartsAt: new Date(now.getTime() - 84 * 60 * 60 * 1000),
-        saleEndsAt: new Date(now.getTime() + 84 * 60 * 60 * 1000)
+        saleStartsAt: new Date(now.getTime() - 15 * 60 * 1000),
+        saleEndsAt: new Date(now.getTime() + 15 * 60 * 1000)
       },
       {
         name: "Flash Headphones",
