@@ -11,7 +11,7 @@ A high-performance flash sale application designed to safely handle **high-concu
 cd server
 npm install
 npx prisma migrate reset
-npx prisma db seed
+npm run seed
 npm run dev
 ```
 
